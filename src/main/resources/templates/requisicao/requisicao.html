@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Requisição</title>
+  <!-- Adicione o link do Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	
+  <div class="container mt-5">
+	<div class="user-profile float-right mb-3">
+      <img src="caminho/para/sua/foto-de-perfil.jpg" alt="Foto de Perfil">
+      <span>Nome do Usuário</span>
+    </div>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+		  <li class="nav-item">
+            <a class="nav-link active" href="#">Requisição</a>
+          </li>	
+          <li class="nav-item">
+            <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="#">Admin</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="#">Estoque</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="#">Estoquistas</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    
+    <h2>Formulário de Requisição</h2>
+    
+    <form th:action="@{/}" id="requisicaoForm" method="post">
+		
+		<div th:object="${requisicao}">
+			<div class="form-row mb-3">
+				<div class="col"><label for="tipo">Tipo</label></div>
+				<div class="col"><label for="receptor">Receptor</label></div>
+				<div class="col"><label for="destino">Destino</label></div>
+		  	</div>
+		  	
+		  	<div class="form-row mb-3">
+		        <div class="col">
+					<select type="text" class="form-control" id="valorDropdown" name="tipoRequisicao" th:field="*{tipoReq}">
+			            <option value="OBRA">Obra</option>
+			            <option value="MANUTENCAO">Manutenção</option>
+			            <option value="FERRAMENTAL">Ferramental</option>
+			            <option value="EPI">EPI</option>
+			            <option value="EPC">EPC</option>
+			        </select>
+			    </div>
+		    	<div class="col"><input type="text" class="form-control" placeholder="Receptor" name="receptor" th:field="*{receptor}"></div>
+				<div class="col"><input type="text" class="form-control" placeholder="Destino" name="destino" th:field="*{destino}"></div>
+			</div>
+	  	</div>
+	  	
+	  <div th:each="material, rowStat : ${materiais}">
+		  
+		  <div class="form-row mb-3">
+			<div class="col"><label for="sigla">Sigla</label></div>
+			<div class="col"><label for="tipoMaterial">Tipo</label></div>
+		    <div class="col"><label for="nome">Nome</label></div>
+		    <div class="col"><label for="descricao">Descricao</label></div>
+			<div class="col"><label for="unidadeDeMedida">Unidade</label></div>
+			<div class="col"><label for="quantidadeRequisitada">Quantidade</label></div>
+			<div class="col"><label for="checkbox">Devolução:</label></div>
+			<div class="col"><label for="quantidadeDevolvida">Devolvida</label></div>
+		  </div>  
+		  
+	      <div class="form-row mb-3">
+	        <div class="col"><input type="text" class="form-control" placeholder="Sigla" name="sigla" th:field="*{materiais[__${rowStat.index}__].sigla}"></div>
+	        <div class="col">
+				<select type="text" class="form-control" id="valorDropdown" name="tipo" th:field="*{materiais[__${rowStat.index}__].tipo}">
+		            <option value="ELETRICO">Elétrico</option>
+		            <option value="CIVIL">Civil</option>
+		            <option value="HIDRAULICO">Hidráulico</option>
+		            <option value="VESTIMENTA">Vestimenta</option>
+		            <option value="EPI">EPI</option>
+		            <option value="EPC">EPC</option>
+		            <option value="FERRAMENTA">Ferramenta</option>
+		        </select>
+		    </div>
+	        <div class="col"><input type="text" class="form-control" placeholder="Nome" name="nome" th:field="*{materiais[__${rowStat.index}__].nome}"></div>
+	        <div class="col"><input type="text" class="form-control" placeholder="Descrição" name="descricao" th:field="*{materiais[__${rowStat.index}__].descricao}"></div>
+	        <div class="col">
+				<select type="text" class="form-control" id="valorDropdown" name="unidadeDeMedida" th:field="*{materiais[__${rowStat.index}__].unidadeDeMedida}">
+		            <option value="M">M</option>
+		            <option value="M2">M²</option>
+		            <option value="M3">M³</option>
+		            <option value="UND">UND</option>
+		        </select>
+		    </div>
+	        <div class="col"><input type="number" step="any" class="form-control" placeholder="Quantidade" name="quantidadeRequisitada" th:field="*{materiais[__${rowStat.index}__].quantidadeRequisitada}"></div>
+	        <div class="col"><input type="checkbox" id="checkbox" name="devolucao" th:field="*{materiais[__${rowStat.index}__].devolucao}"></div>
+	        <div class="col"><input type="number" step="any" class="form-control" placeholder="Quantidade" name="quantidadeDevolvida" th:field="*{materiais[__${rowStat.index}__].quantidadeDevolvida}"></div>
+	      </div>
+		  
+	  </div>
+	  
+      <div id="linhasExtra"></div>
+      <button type="button" class="btn btn-primary" onclick="adicionarLinha()">Adicionar Linha</button>
+      <button type="submit" class="btn btn-success">Enviar</button>
+      <button type="button" class="btn btn-danger" onclick="limparCampos()">Limpar</button>
+    </form>
+  </div>
+
+  <!-- Adicione o link do Bootstrap JS e o jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    function adicionarLinha() {
+		
+	  var indice = 	'' + 'materiais[__${rowStat.index}__].';
+      var linha = `
+        <div class="form-row mb-3">
+	        <div class="col"><input type="text" class="form-control" placeholder="Sigla" name="sigla" th:field="*{${indice}sigla}"></div>
+	        <div class="col">
+				<select type="text" class="form-control" id="valorDropdown" name="tipo" th:field="*{${indice}tipo}">
+		            <option value="ELETRICO">Elétrico</option>
+		            <option value="CIVIL">Civil</option>
+		            <option value="HIDRAULICO">Hidráulico</option>
+		            <option value="VESTIMENTA">Vestimenta</option>
+		            <option value="EPI">EPI</option>
+		            <option value="EPC">EPC</option>
+		            <option value="FERRAMENTA">Ferramenta</option>
+		        </select>
+		    </div>
+	        <div class="col"><input type="text" class="form-control" placeholder="Nome" name="nome" th:field="*{${indice}nome}"></div>
+	        <div class="col"><input type="text" class="form-control" placeholder="Descrição" name="descricao" th:field="*{${indice}descricao}"></div>
+	        <div class="col">
+				<select type="text" class="form-control" id="valorDropdown" name="unidadeDeMedida" th:field="*{${indice}unidadeDeMedida}">
+		            <option value="M">M</option>
+		            <option value="M2">M²</option>
+		            <option value="M3">M³</option>
+		            <option value="UND">UND</option>
+		        </select>
+		    </div>
+	        <div class="col"><input type="number" step="any" class="form-control" placeholder="Quantidade" name="quantidadeRequisitada" th:field="*{${indice}quantidadeRequisitada}"></div>
+	        <div class="col"><input type="checkbox" id="checkbox" name="devolucao" th:field="*{${indice}devolucao}"></div>
+	        <div class="col"><input type="number" step="any" class="form-control" placeholder="Quantidade" name="quantidadeDevolvida" th:field="*{${indice}quantidadeDevolvida}"></div>
+	      </div>
+      `;
+      document.getElementById('linhasExtra').insertAdjacentHTML('beforeend', linha);
+    }
+
+    function limparCampos() {
+      document.getElementById('requisicaoForm').reset();
+      document.getElementById('linhasExtra').innerHTML = '';
+    }
+  </script>
+</body>
+</html>
