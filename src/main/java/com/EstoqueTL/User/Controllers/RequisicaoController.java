@@ -35,7 +35,7 @@ public class RequisicaoController {
 	}
 	
 	@PostMapping
-	public String RequisicaoPost(Model model, @Valid Requisicao requisicao, BindingResult bindingResult) {
+	public String RequisicaoPost(Model model, @Valid @ModelAttribute Requisicao requisicao, BindingResult bindingResult) {
 		
 		if (bindingResult.hasErrors()) {	// FALTA IMPLEMENTAR PARA DADOS INVALIDOS, BUGADO
 			model.addAttribute("errors", bindingResult.getAllErrors());
