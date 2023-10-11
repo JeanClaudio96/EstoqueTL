@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,27 +32,22 @@ public class RequisicaoController {
 	@GetMapping
 	public String RequisicaoGet(Model model) {
 		
-		List<Material> materiais = new ArrayList<>();
-		
 		Requisicao requisicao = new Requisicao();
-		
-		model.addAttribute("material", materiais);
 		model.addAttribute("requisicao", requisicao);
 		
 		return "requisicao/requisicao";
 	}
 	
 	@PostMapping
-	public String RequisicaoPost(@Valid List<Material> material, @Valid Requisicao requisicao, BindingResult bindingResult) {
+	public String RequisicaoPost(Model model, @Valid @ModelAttribute Requisicao requisicao, BindingResult bindingResult) {
+		
+		System.out.println(requisicao.getMateriais().toString() + "\n");
+		System.out.println(requisicao + "\n");
 		
 		if (bindingResult.hasErrors()) {	// FALTA IMPLEMENTAR PARA DADOS INVALIDOS, BUGADO
-			//StringBuilder errors = new StringBuilder();
-            //bindingResult.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("\n"));
-            
+			model.addAttribute("errors", bindingResult.getAllErrors());
 			return "requisicao/requisicao";
 			}
-
-		for(Material item : material) {requisicao.addMateriais(item);}
 		
 		requisicao.setStatus(Status.PENDENTE);
 		

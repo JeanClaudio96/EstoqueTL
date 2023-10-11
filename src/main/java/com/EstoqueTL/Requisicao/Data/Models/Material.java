@@ -8,7 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,30 +25,34 @@ public class Material {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@NotBlank(message = "A sigla nao pode ser nula")
-	@Column(name = "sigla", length = 10)
+	@NotNull(message = "A sigla do material nao pode ser nula")
+	@Size(min = 0)
+	@Column(name = "sigla")
     private String sigla;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo", nullable = false)
+    @NotNull(message = "O tipo do material nao pode ser nula")
+    @Column(name = "tipo")
     private TipoMaterial tipo;
 
-    @Column(name = "nome", nullable = false)
+    @NotNull(message = "O nome do material nao pode ser nula")
+    @Column(name = "nome", columnDefinition = "TEXT")
     private String nome;
 
-    @Column(name = "descricao", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "descricao", columnDefinition = "TEXT")
     private String descricao;
     
+    @NotNull(message = "A unidade de medida do material nao pode ser nula")
     @Enumerated(EnumType.STRING)
-    @Column(name = "und_medida", nullable = false)
+    @Column(name = "und_medida")
     private UnidadeDeMedida unidadeDeMedida;
     
-    @Column(name = "qtd_requisitada", nullable = false)
+    @Column(name = "qtd_requisitada", columnDefinition = "DEFAULT 0")
 	private double quantidadeRequisitada;
-    
-    @Column(name = "devolucao", columnDefinition = "BOOLEAN DEFAULT false NOT NULL")
+
+    @Column(name = "devolucao", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean devolucao;
     
-    @Column(name = "qtd_devolvida", nullable = false)
+    @Column(name = "qtd_devolvida", columnDefinition = "DEFAULT 0")
 	private double quantidadeDevolvida;
 }

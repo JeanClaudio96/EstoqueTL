@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,24 +34,11 @@
       </div>
     </nav>
     
-    <h2>Formulário de Requisição</h2>  	
+    <h2>Formulário de Requisição</h2>
     
-    <form th:action="@{/}" id="requisicaoForm" method="post" th:object="${requisicao}">
-		<div id = "errosForm">
-			<div th:each="error : *{#fields.errors()}">
-			    <div class="error">
-			        <span th:text="${error.toString()}"></span>
-			    </div>
-			</div>
-			<div th:each="material, materialIndex : *{materiais}">
-			    <div th:each="error : ${#fields.errors('materiais[' + materialIndex.index + ']')}">
-			        <div class="error">
-			            <span th:text="${error.toString()}"></span>
-			        </div>
-			    </div>
-			</div>
-		</div>
+    <form th:action="@{/}" id="requisicaoForm" method="post">
 		
+		<div th:object="${requisicao}">
 			<div class="form-row mb-3">
 				<div class="col"><label for="tipo">Tipo</label></div>
 				<div class="col"><label for="receptor">Receptor</label></div>
@@ -60,7 +47,7 @@
 		  	
 		  	<div class="form-row mb-3">
 		        <div class="col">
-					<select type="text" class="form-control" id="valorDropdown" name="tipoRequisicao" th:field="*{tipoReq}" required>
+					<select type="text" class="form-control" id="valorDropdown" name="tipoRequisicao" th:field="*{tipoReq}">
 			            <option value="OBRA">Obra</option>
 			            <option value="MANUTENCAO">Manutenção</option>
 			            <option value="FERRAMENTAL">Ferramental</option>
@@ -68,11 +55,12 @@
 			            <option value="EPC">EPC</option>
 			        </select>
 			    </div>
-		    	<div class="col"><input type="text" class="form-control" placeholder="Receptor" name="receptor" th:field="*{receptor}" required></div>
-				<div class="col"><input type="text" class="form-control" placeholder="Destino" name="destino" th:field="*{destino}" required></div>
+		    	<div class="col"><input type="text" class="form-control" placeholder="Receptor" name="receptor" th:field="*{receptor}"></div>
+				<div class="col"><input type="text" class="form-control" placeholder="Destino" name="destino" th:field="*{destino}"></div>
 			</div>
-	    
-	  <div th:each="material, rowStat : *{materiais}">
+	  	</div>
+	  	
+	  <div th:each="material, rowStat : ${materiais}">
 		  
 		  <div class="form-row mb-3">
 			<div class="col"><label for="sigla">Sigla</label></div>
@@ -86,9 +74,9 @@
 		  </div>  
 		  
 	      <div class="form-row mb-3">
-	        <div class="col"><input type="text" class="form-control" placeholder="Sigla" name="sigla" th:field="*{materiais[__${rowStat.index}__].sigla}" required></div>
+	        <div class="col"><input type="text" class="form-control" placeholder="Sigla" name="sigla" th:field="*{materiais[__${rowStat.index}__].sigla}"></div>
 	        <div class="col">
-				<select type="text" class="form-control" id="valorDropdown" name="tipo" th:field="*{materiais[__${rowStat.index}__].tipo}" required>
+				<select type="text" class="form-control" id="valorDropdown" name="tipo" th:field="*{materiais[__${rowStat.index}__].tipo}">
 		            <option value="ELETRICO">Elétrico</option>
 		            <option value="CIVIL">Civil</option>
 		            <option value="HIDRAULICO">Hidráulico</option>
@@ -98,10 +86,10 @@
 		            <option value="FERRAMENTA">Ferramenta</option>
 		        </select>
 		    </div>
-	        <div class="col"><input type="text" class="form-control" placeholder="Nome" name="nome" th:field="*{materiais[__${rowStat.index}__].nome}" required></div>
-	        <div class="col"><input type="text" class="form-control" placeholder="Descrição" name="descricao" th:field="*{materiais[__${rowStat.index}__].descricao}" required></div>
+	        <div class="col"><input type="text" class="form-control" placeholder="Nome" name="nome" th:field="*{materiais[__${rowStat.index}__].nome}"></div>
+	        <div class="col"><input type="text" class="form-control" placeholder="Descrição" name="descricao" th:field="*{materiais[__${rowStat.index}__].descricao}"></div>
 	        <div class="col">
-				<select type="text" class="form-control" id="valorDropdown" name="unidadeDeMedida" th:field="*{materiais[__${rowStat.index}__].unidadeDeMedida}" required>
+				<select type="text" class="form-control" id="valorDropdown" name="unidadeDeMedida" th:field="*{materiais[__${rowStat.index}__].unidadeDeMedida}">
 		            <option value="M">M</option>
 		            <option value="M2">M²</option>
 		            <option value="M3">M³</option>
@@ -116,7 +104,6 @@
 	  </div>
 	  
       <div id="linhasExtra"></div>
-      
       <button type="button" class="btn btn-primary" onclick="adicionarLinha()">Adicionar Linha</button>
       <button type="submit" class="btn btn-success">Enviar</button>
       <button type="button" class="btn btn-danger" onclick="limparCampos()">Limpar</button>
@@ -127,6 +114,47 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script th:src="@{/js/requisicao.js}"></script>
+
+  <script>
+    function adicionarLinha() {
+		
+	  var indice = 	'' + 'materiais[__${rowStat.index}__].';
+      var linha = `
+        <div class="form-row mb-3">
+	        <div class="col"><input type="text" class="form-control" placeholder="Sigla" name="sigla" th:field="*{${indice}sigla}"></div>
+	        <div class="col">
+				<select type="text" class="form-control" id="valorDropdown" name="tipo" th:field="*{${indice}tipo}">
+		            <option value="ELETRICO">Elétrico</option>
+		            <option value="CIVIL">Civil</option>
+		            <option value="HIDRAULICO">Hidráulico</option>
+		            <option value="VESTIMENTA">Vestimenta</option>
+		            <option value="EPI">EPI</option>
+		            <option value="EPC">EPC</option>
+		            <option value="FERRAMENTA">Ferramenta</option>
+		        </select>
+		    </div>
+	        <div class="col"><input type="text" class="form-control" placeholder="Nome" name="nome" th:field="*{${indice}nome}"></div>
+	        <div class="col"><input type="text" class="form-control" placeholder="Descrição" name="descricao" th:field="*{${indice}descricao}"></div>
+	        <div class="col">
+				<select type="text" class="form-control" id="valorDropdown" name="unidadeDeMedida" th:field="*{${indice}unidadeDeMedida}">
+		            <option value="M">M</option>
+		            <option value="M2">M²</option>
+		            <option value="M3">M³</option>
+		            <option value="UND">UND</option>
+		        </select>
+		    </div>
+	        <div class="col"><input type="number" step="any" class="form-control" placeholder="Quantidade" name="quantidadeRequisitada" th:field="*{${indice}quantidadeRequisitada}"></div>
+	        <div class="col"><input type="checkbox" id="checkbox" name="devolucao" th:field="*{${indice}devolucao}"></div>
+	        <div class="col"><input type="number" step="any" class="form-control" placeholder="Quantidade" name="quantidadeDevolvida" th:field="*{${indice}quantidadeDevolvida}"></div>
+	      </div>
+      `;
+      document.getElementById('linhasExtra').insertAdjacentHTML('beforeend', linha);
+    }
+
+    function limparCampos() {
+      document.getElementById('requisicaoForm').reset();
+      document.getElementById('linhasExtra').innerHTML = '';
+    }
+  </script>
 </body>
 </html>
