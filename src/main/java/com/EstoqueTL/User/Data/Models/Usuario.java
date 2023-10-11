@@ -1,4 +1,4 @@
-package com.EstoqueTL.Usuario.Data.Models;
+package com.EstoqueTL.User.Data.Models;
 
 import java.util.Collection;
 import java.util.Date;

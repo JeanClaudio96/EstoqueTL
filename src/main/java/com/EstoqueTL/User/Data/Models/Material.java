@@ -1,4 +1,4 @@
-package com.EstoqueTL.Requisicao.Data.Models;
+package com.EstoqueTL.User.Data.Models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,8 +32,8 @@ public class Material {
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "O tipo do material nao pode ser nula")
-    @Column(name = "tipo")
-    private TipoMaterial tipo;
+    @Column(name = "tipo_Material")
+    private TipoMaterial tipoMaterial;
 
     @NotNull(message = "O nome do material nao pode ser nula")
     @Column(name = "nome", columnDefinition = "TEXT")
@@ -48,11 +48,11 @@ public class Material {
     private UnidadeDeMedida unidadeDeMedida;
     
     @Column(name = "qtd_requisitada", columnDefinition = "DEFAULT 0")
-	private double quantidadeRequisitada;
+	private Double quantidadeRequisitada;
 
     @Column(name = "devolucao", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean devolucao;
     
     @Column(name = "qtd_devolvida", columnDefinition = "DEFAULT 0")
-	private double quantidadeDevolvida;
+	private Double quantidadeDevolvida;
 }

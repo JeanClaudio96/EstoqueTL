@@ -1,4 +1,4 @@
-package com.EstoqueTL.Requisicao.Data.Models;
+package com.EstoqueTL.User.Data.Models;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +20,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -37,41 +38,32 @@ public class Requisicao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@NotBlank
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "Tipo de requisicao nao pode ser nulo")
 	@Column(name = "tipo_requisicao")
 	private TipoReq tipoReq;
 	
-	@NotBlank
 	@NotNull(message = "Requisitante nao pode ser nulo")
 	@Column(name = "requisitante")
 	private String requisitante;
 	
-	@NotBlank
 	@NotNull(message = "Receptor nao pode ser nulo")
 	@Column(name = "receptor")
 	private String receptor;
 	
-	@NotBlank
-	@NotNull
 	@Column(name = "data")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
 	
-	@NotBlank
 	@NotNull(message = "Destino nao pode ser nulo")
 	@Column(name = "destino")
 	private String destino;
 	
-	@NotBlank
-	@NotNull
+	@NotNull(message = "Status nao pode ser nulo")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private Status status;
 	
-	@NotBlank
-	@NotNull(message = "Não pode ter lista nula de materiais")
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "requisicao_id", nullable = false)
 	@OrderBy("sigla")

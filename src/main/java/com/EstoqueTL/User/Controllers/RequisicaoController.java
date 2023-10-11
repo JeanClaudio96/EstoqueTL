@@ -1,4 +1,4 @@
-package com.EstoqueTL.Requisicao.Controllers;
+package com.EstoqueTL.User.Controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.EstoqueTL.Requisicao.Data.Models.Requisicao;
-import com.EstoqueTL.Requisicao.Data.Models.Status;
-import com.EstoqueTL.Requisicao.Data.Repositorys.RequisicaoRepository;
+import com.EstoqueTL.User.Data.Models.Requisicao;
+import com.EstoqueTL.User.Data.Models.Status;
+import com.EstoqueTL.User.Data.Repositorys.RequisicaoRepository;
 
 import jakarta.validation.Valid;
 
@@ -31,23 +31,19 @@ public class RequisicaoController {
 		Requisicao requisicao = new Requisicao();
 		model.addAttribute("requisicao", requisicao);
 		
-		return "requisicao/requisicaoPage";
+		return "user/requisicaoPage";
 	}
 	
 	@PostMapping
-	public String RequisicaoPost(Model model, @Valid @ModelAttribute Requisicao requisicao, BindingResult bindingResult) {
-		
-		System.out.println(requisicao.getMateriais().toString() + "\n");
-		System.out.println(requisicao + "\n");
+	public String RequisicaoPost(Model model, @Valid Requisicao requisicao, BindingResult bindingResult) {
 		
 		if (bindingResult.hasErrors()) {	// FALTA IMPLEMENTAR PARA DADOS INVALIDOS, BUGADO
 			model.addAttribute("errors", bindingResult.getAllErrors());
-			return "requisicao/requisicaoPage";
+			return "user/requisicaoPage";
 			}
-		
-		requisicao.setStatus(Status.PENDENTE);
-		
-		requisicao.setRequisitante("Eu mesmo"); // FALTA IMPLEMENTAR PARA RECEBER O NOME DO USUARIO
+
+		System.out.println(requisicao.getMateriais().toString() + "\n");
+		System.out.println(requisicao + "\n");
 		
 		requisicaoRepository.save(requisicao);
 		

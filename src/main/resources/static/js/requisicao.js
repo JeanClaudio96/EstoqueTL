@@ -4,7 +4,7 @@ function adicionarLinha() {
         <div class="linha-material form-row mb-3">
             <div class="col"><input type="text" class="form-control" placeholder="Sigla" name="materiais[${indice}].sigla" required></div>
             <div class="col">
-                <select type="text" class="form-control" id="valorDropdown" name="materiais[${indice}].tipo" required>
+                <select type="text" class="form-control" id="tipoMaterialSelect" name="materiais[${indice}].tipoMaterial" required>
                     <option value="ELETRICO">Elétrico</option>
                     <option value="CIVIL">Civil</option>
                     <option value="HIDRAULICO">Hidráulico</option>
@@ -17,7 +17,7 @@ function adicionarLinha() {
             <div class="col"><input type="text" class="form-control" placeholder="Nome" name="materiais[${indice}].nome" required></div>
             <div class="col"><input type="text" class="form-control" placeholder="Descrição" name="materiais[${indice}].descricao" required></div>
             <div class="col">
-                <select type="text" class="form-control" id="valorDropdown" name="materiais[${indice}].unidadeDeMedida" required>
+                <select type="text" class="form-control" id="unidadeDeMedidaSelect" name="materiais[${indice}].unidadeDeMedida" required>
                     <option value="M">M</option>
                     <option value="M2">M²</option>
                     <option value="M3">M³</option>

@@ -16,11 +16,11 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping(value="/admin")
-public class EstoqueAdminController {
+public class AdicionarMateriaisController {
 	
 	final private AdicionarMateriaisRepository adicionarMaterialRepository;
 
-    EstoqueAdminController(AdicionarMateriaisRepository adicionarMaterialRepository) {
+    AdicionarMateriaisController(AdicionarMateriaisRepository adicionarMaterialRepository) {
         this.adicionarMaterialRepository = adicionarMaterialRepository;
     }
 	

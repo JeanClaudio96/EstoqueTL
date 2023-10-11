@@ -1,4 +1,4 @@
-package com.EstoqueTL.Requisicao.Data.Models;
+package com.EstoqueTL.User.Data.Models;
 
 public enum TipoReq {
 	OBRA,

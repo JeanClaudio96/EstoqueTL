@@ -38,7 +38,7 @@
 		  	
 		  	<div class="form-row mb-3">
 		        <div class="col">
-					<select type="text" class="form-control" id="valorDropdown" name="tipoRequisicao" th:field="*{tipoReq}" required>
+					<select type="text" class="form-control" id="tipoReqSelect" name="tipoRequisicao" th:field="*{tipoReq}" required>
 			            <option value="OBRA">Obra</option>
 			            <option value="MANUTENCAO">Manutenção</option>
 			            <option value="FERRAMENTAL">Ferramental</option>
@@ -48,6 +48,13 @@
 			    </div>
 		    	<div class="col"><input type="text" class="form-control" placeholder="Receptor" name="receptor" th:field="*{receptor}" required></div>
 				<div class="col"><input type="text" class="form-control" placeholder="Destino" name="destino" th:field="*{destino}" required></div>
+				<input type="text" style="display: none;" placeholder="Requisitante" name="requisitante" value="Eu" th:field="*{requisitante}">
+				<select type="text" style="display: none;" id="statusSelect" name="status" th:field="*{status}">
+		            <option selected value="PENDENTE">Elétrico</option>
+		            <option value="ACEITO">Civil</option>
+		            <option value="RECUSADO">Hidráulico</option>
+		            <option value="RETIFICAR">Vestimenta</option>
+		        </select>
 			</div>
 	    
 	  <div th:each="material, rowStat : *{materiais}">
@@ -66,7 +73,7 @@
 	      <div class="form-row mb-3">
 	      	<div class="col"><input type="text" class="form-control" placeholder="Sigla" name="sigla" th:field="*{materiais[__${rowStat.index}__].sigla}" required></div>
 	        <div class="col">
-				<select type="text" class="form-control" id="valorDropdown" name="tipo" th:field="*{materiais[__${rowStat.index}__].tipo}" required>
+				<select type="text" class="form-control" id="tipoMaterialSelect" name="tipoMaterial" th:field="*{materiais[__${rowStat.index}__].tipoMaterial}" required>
 		            <option value="ELETRICO">Elétrico</option>
 		            <option value="CIVIL">Civil</option>
 		            <option value="HIDRAULICO">Hidráulico</option>
@@ -79,7 +86,7 @@
 	        <div class="col"><input type="text" class="form-control" placeholder="Nome" name="nome" th:field="*{materiais[__${rowStat.index}__].nome}" required></div>
 	        <div class="col"><input type="text" class="form-control" placeholder="Descrição" name="descricao" th:field="*{materiais[__${rowStat.index}__].descricao}" required></div>
 	        <div class="col">
-				<select type="text" class="form-control" id="valorDropdown" name="unidadeDeMedida" th:field="*{materiais[__${rowStat.index}__].unidadeDeMedida}" required>
+				<select type="text" class="form-control" id="unidadeDeMedidaSelect" name="unidadeDeMedida" th:field="*{materiais[__${rowStat.index}__].unidadeDeMedida}" required>
 		            <option value="M">M</option>
 		            <option value="M2">M²</option>
 		            <option value="M3">M³</option>
