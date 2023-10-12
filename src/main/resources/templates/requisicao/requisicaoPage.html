@@ -1,39 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulário de Requisição</title>
-  <!-- Adicione o link do Bootstrap CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	
-  <div class="container mt-5">
-	<div class="user-profile float-right mb-3">
-      <img src="caminho/para/sua/foto-de-perfil.jpg" alt="Foto de Perfil">
-      <span>Nome do Usuário</span>
-    </div>
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-		  <li class="nav-item">
-            <a class="nav-link active" href="#">Requisição</a>
-          </li>	
-          <li class="nav-item">
-            <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="#">Admin</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="#">Estoque</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ Request::is('admin*') ? 'active' : '' }}" href="#">Estoquistas</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    
+
+	<div class="container mt-5">
+		
+		<div th:replace="~{modules/header :: header}"></div>
+		
     <h2>Formulário de Requisição</h2>  	
     
     <form th:action="@{/}" id="requisicaoForm" method="post" th:object="${requisicao}">
@@ -86,7 +64,7 @@
 		  </div>  
 		  
 	      <div class="form-row mb-3">
-	        <div class="col"><input type="text" class="form-control" placeholder="Sigla" name="sigla" th:field="*{materiais[__${rowStat.index}__].sigla}" required></div>
+	      	<div class="col"><input type="text" class="form-control" placeholder="Sigla" name="sigla" th:field="*{materiais[__${rowStat.index}__].sigla}" required></div>
 	        <div class="col">
 				<select type="text" class="form-control" id="valorDropdown" name="tipo" th:field="*{materiais[__${rowStat.index}__].tipo}" required>
 		            <option value="ELETRICO">Elétrico</option>
@@ -117,12 +95,13 @@
 	  
       <div id="linhasExtra"></div>
       
-      <button type="button" class="btn btn-primary" onclick="adicionarLinha()">Adicionar Linha</button>
+      <button type="button" class="btn btn-light btn-outline-secondary" onclick="adicionarLinha()">Adicionar Linha</button>
+      <button type="button" class="btn btn-light btn-outline-secondary" onclick="limparCampos()">Limpar</button>
       <button type="submit" class="btn btn-success">Enviar</button>
-      <button type="button" class="btn btn-danger" onclick="limparCampos()">Limpar</button>
     </form>
-  </div>
 
+	</div>
+	<div th:replace="~{modules/footer :: footer}"></div>
   <!-- Adicione o link do Bootstrap JS e o jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

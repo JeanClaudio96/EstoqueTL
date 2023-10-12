@@ -10,6 +10,6 @@ public class PendentesController {
 	
 	@GetMapping
 	public String PendentesGet() {
-		return "requisicao/pendentes";
+		return "requisicao/pendentesPage";
 	}
 }

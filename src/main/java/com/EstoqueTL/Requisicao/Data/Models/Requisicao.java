@@ -20,6 +20,8 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,27 +37,41 @@ public class Requisicao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
+	@NotBlank
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo_requisicao", nullable = false)
+	@NotNull(message = "Tipo de requisicao nao pode ser nulo")
+	@Column(name = "tipo_requisicao")
 	private TipoReq tipoReq;
 	
-	@Column(name = "requisitante", nullable = false)
+	@NotBlank
+	@NotNull(message = "Requisitante nao pode ser nulo")
+	@Column(name = "requisitante")
 	private String requisitante;
 	
-	@Column(name = "receptor", nullable = false)
+	@NotBlank
+	@NotNull(message = "Receptor nao pode ser nulo")
+	@Column(name = "receptor")
 	private String receptor;
 	
+	@NotBlank
+	@NotNull
 	@Column(name = "data")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
 	
-	@Column(name = "destino", nullable = false)
+	@NotBlank
+	@NotNull(message = "Destino nao pode ser nulo")
+	@Column(name = "destino")
 	private String destino;
 	
+	@NotBlank
+	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name = "status", nullable = false)
+	@Column(name = "status")
 	private Status status;
 	
+	@NotBlank
+	@NotNull(message = "Não pode ter lista nula de materiais")
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "requisicao_id", nullable = false)
 	@OrderBy("sigla")
