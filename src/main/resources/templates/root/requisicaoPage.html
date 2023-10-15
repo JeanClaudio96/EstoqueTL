@@ -38,7 +38,7 @@
 		  	
 		  	<div class="form-row mb-3">
 		        <div class="col">
-					<select type="text" class="form-control" id="tipoReqSelect" name="tipoRequisicao" th:field="*{tipoReq}" required>
+					<select type="text" class="form-control" id="tipoRequisicaoSelect" name="tipoRequisicao" th:field="*{tipoRequisicao}" required>
 			            <option value="OBRA">Obra</option>
 			            <option value="MANUTENCAO">Manutenção</option>
 			            <option value="FERRAMENTAL">Ferramental</option>
@@ -88,7 +88,7 @@
 		        </select>
 		    </div>
 	        <div class="col"><input type="number" step="any" class="form-control" placeholder="Quantidade" name="materiais[0].quantidadeRequisitada" ></div>
-	        <div class="col"><input type="checkbox" id="checkbox" name="materiais[0].devolucao"></div>
+	        <div class="col"><input type="checkbox" value="true" id="checkbox" name="materiais[0].devolucao"></div>
 	        <div class="col"><input type="number" step="any" class="form-control" placeholder="Quantidade" name="materiais[0].quantidadeDevolvida"></div>
 	      </div>
 		  

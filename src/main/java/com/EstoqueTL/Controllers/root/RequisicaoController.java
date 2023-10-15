@@ -1,5 +1,7 @@
 package com.EstoqueTL.Controllers.root;
 
+import com.EstoqueTL.Data.DTO.RequisicaoDTO;
+import com.EstoqueTL.Services.RequisicaoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,10 +19,12 @@ import jakarta.validation.Valid;
 @RequestMapping(value="/")
 public class RequisicaoController {
 
-	final RequisicaoRepository requisicaoRepository;
+	private final RequisicaoRepository requisicaoRepository;
+	private final RequisicaoService requisicaoService;
 
-    RequisicaoController(RequisicaoRepository requisicaoRepository) {
+	RequisicaoController(RequisicaoRepository requisicaoRepository, RequisicaoService requisicaoService) {
         this.requisicaoRepository = requisicaoRepository;
+		this.requisicaoService = requisicaoService;
     }
 
 	@GetMapping
@@ -33,12 +37,17 @@ public class RequisicaoController {
 	}
 	
 	@PostMapping
-	public String RequisicaoPost(Model model, @Valid @ModelAttribute Requisicao requisicao, BindingResult bindingResult) {
-		
+	public String RequisicaoPost(Model model, @Valid @ModelAttribute RequisicaoDTO requisicaoDTO, BindingResult bindingResult) {
+
+		Requisicao requisicao = new Requisicao();
+
 		if (bindingResult.hasErrors()) {	// FALTA IMPLEMENTAR PARA DADOS INVALIDOS, BUGADO
 			model.addAttribute("errors", bindingResult.getAllErrors());
+			model.addAttribute("requisicao", requisicao);
 			return "root/requisicaoPage";
 			}
+
+		requisicao = requisicaoService.convertDtoToEntity(requisicaoDTO);
 
 		System.out.println(requisicao.getMateriais().toString() + "\n");
 		System.out.println(requisicao + "\n");

@@ -40,17 +40,14 @@ public class Requisicao {
     private Long id;
 	
 	@Enumerated(EnumType.STRING)
-	@NotBlank
 	@NotNull(message = "Tipo de requisicao nao pode ser nulo")
 	@Column(name = "tipo_requisicao")
-	private TipoReq tipoReq;
+	private TipoReq tipoRequisicao;
 
-	@NotBlank
 	@NotNull(message = "Requisitante nao pode ser nulo")
 	@Column(name = "requisitante")
 	private String requisitante;
 
-	@NotBlank
 	@NotNull(message = "Receptor nao pode ser nulo")
 	@Column(name = "receptor")
 	private String receptor;
@@ -59,12 +56,10 @@ public class Requisicao {
 	@Column(name = "created_at")
 	private LocalDateTime data;
 
-	@NotBlank
 	@NotNull(message = "Destino nao pode ser nulo")
 	@Column(name = "destino")
 	private String destino;
 
-	@NotBlank
 	@NotNull(message = "Status nao pode ser nulo")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")

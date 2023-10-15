@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -51,8 +53,8 @@ public class Material {
 	private Double quantidadeRequisitada;
 
     @Column(name = "devolucao")
-    private Boolean devolucao = false;
+    private Boolean devolucao;
     
     @Column(name = "qtd_devolvida")
-	private Double quantidadeDevolvida = (double) 0;
+	private Double quantidadeDevolvida;
 }
