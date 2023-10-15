@@ -1,5 +1,5 @@
 function adicionarLinha() {
-    var indice = $('#linhasExtra .linha-material').length + 1;
+    var indice = $('#linhasExtra .linha-material').length;
     var linha = `
         <div class="linha-material form-row mb-3">
             <div class="col"><input type="text" class="form-control" placeholder="Sigla" name="materiais[${indice}].sigla" required></div>
