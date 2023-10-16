@@ -48,12 +48,9 @@ public class RequisicaoController {
 			}
 
 		requisicao = requisicaoService.convertDtoToEntity(requisicaoDTO);
-
-		System.out.println(requisicao.getMateriais().toString() + "\n");
-		System.out.println(requisicao + "\n");
 		
 		requisicaoRepository.save(requisicao);
 		
-		return "redirect:/pendentes";
+		return "redirect:/minhasRequisicoes";
 	}
 }

@@ -10,10 +10,44 @@
     <div class="container mt-5">
         <div th:replace="~{modules/header :: header}"></div>
 
-        <p>Pagina de mostrar estoque</p>
+        <h2>Lista de Materiais de Estoque</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Sigla</th>
+                <th scope="col">Tipo de Material</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Unidade de Medida</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Adicionado Por</th>
+                <th scope="col">Atualizado Por</th>
+                <th scope="col">Adicionado Em</th>
+                <th scope="col">Atualizado Em</th>
+                <th scope="col">Ativo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Loop through your EstoqueDTO list and create table rows -->
+            <tr th:each="estoque : ${estoqueList}">
+                <td th:text="${estoque.sigla}"></td>
+                <td th:text="${estoque.tipoMaterial}"></td>
+                <td th:text="${estoque.nome}"></td>
+                <td th:text="${estoque.descricao}"></td>
+                <td th:text="${estoque.unidadeDeMedida}"></td>
+                <td th:text="${estoque.quantidade}"></td>
+                <td th:text="${estoque.adicionadoPor}"></td>
+                <td th:text="${estoque.atualizadoPor}"></td>
+                <td th:text="${estoque.adicionadoEm}"></td>
+                <td th:text="${estoque.atualizadoEm}"></td>
+                <td th:text="${estoque.ativo}"></td>
+            </tr>
+            <!-- End of loop -->
+            </tbody>
+        </table>
     </div>
     <div th:replace="~{modules/footer :: footer}"></div>
-    <!-- Adicione o link do Bootstrap JS e o jQuery -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

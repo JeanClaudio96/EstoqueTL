@@ -1,21 +1,15 @@
 package com.EstoqueTL.Data.Models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Entity
@@ -36,7 +30,8 @@ public class Estoque {
     @NotBlank
     @NotNull
     @Column(name = "tipo")
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    private TipoMaterial tipoMaterial;
 
     @NotBlank
     @NotNull
@@ -49,7 +44,8 @@ public class Estoque {
     @NotBlank
     @NotNull
     @Column(name = "unidade_de_medida")
-    private String unidadeDeMedida;
+    @Enumerated(EnumType.STRING)
+    private UnidadeDeMedida unidadeDeMedida;
 
     @NotBlank
     @NotNull
@@ -61,19 +57,13 @@ public class Estoque {
     @Column(name = "adicionado_por")
     private String adicionadoPor;
 
-    @NotBlank
-    @NotNull
-    @Column(name = "atualizado_por")
+    @Column(name = "atualizado_por", columnDefinition = "VARCHAR(255) DEFAULT 'Null'")
     private String atualizadoPor;
 
-    @NotBlank
-    @NotNull
-    @Column(name = "adicionado_em", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date adicionadoEm;
+    @CreationTimestamp
+    @Column(name = "adicionado_em")
+    private LocalDateTime adicionadoEm;
 
-    @NotBlank
-    @NotNull
     @Column(name = "atualizado_em")
     @Temporal(TemporalType.TIMESTAMP)
     private Date atualizadoEm;
@@ -81,8 +71,4 @@ public class Estoque {
     @Column(name="ativo")
     private Boolean ativo = true;
 
-    @PrePersist
-	protected void onCreate() {
-		adicionadoEm = (Date) new Date();
-	}
 }

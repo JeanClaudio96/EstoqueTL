@@ -70,8 +70,4 @@ public class Requisicao {
 	@OrderBy("sigla")
 	private List<Material> materiais = new ArrayList<>();
 	
-	public void addMateriais(Material material) {
-		getMateriais().add(material);
-	}
-	
 }

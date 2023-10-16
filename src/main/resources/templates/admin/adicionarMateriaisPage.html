@@ -11,6 +11,9 @@
 		<div th:replace="~{modules/header :: header}"></div>
         <h2>Formulário de Material</h2>
         <form th:action="@{/admin/adicionarMateriais}"  th:object="${adicionarMateriais}">
+
+            <input type="hidden" name="adicionaroPor" value="ADMIN">
+
             <div class="form-group">
                 <label for="sigla">Sigla:</label>
                 <input type="text" class="form-control" id="sigla" placeholder="Sigla" required>

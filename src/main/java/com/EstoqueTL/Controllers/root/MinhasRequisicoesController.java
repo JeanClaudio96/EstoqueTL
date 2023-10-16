@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(path = "/minhasRequisicoes")
-public class PendentesController {
+public class MinhasRequisicoesController {
 	
 	@GetMapping(path = "")
 	public String PendentesGet() {
