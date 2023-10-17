@@ -36,3 +36,20 @@ function limparCampos() {
 	document.getElementById('requisicaoForm').reset();
 	document.getElementById('linhasExtra').innerHTML = '';
 }
+
+$(document).ready(function() {
+    // Delegação de eventos para lidar com entradas dinâmicas
+    $('#requisicaoForm').on('input', '#sigla', function() {
+        var termo = $(this).val().toUpperCase(); // Pega o texto digitado e converte para maiúsculas
+        var sugestoesFiltradas = siglaList.filter(function(estoque) {
+            return estoque.sigla.toUpperCase().includes(termo); // Filtra as sugestões com base no texto digitado
+        });
+
+        // Atualiza as sugestões no campo de entrada usando o jQuery UI Autocomplete
+        $(this).autocomplete({
+            source: sugestoesFiltradas.map(function(estoque) {
+                return estoque.sigla;
+            })
+        });
+    });
+});

@@ -1,6 +1,8 @@
 package com.EstoqueTL.Controllers.root;
 
 import com.EstoqueTL.Data.DTO.RequisicaoDTO;
+import com.EstoqueTL.Data.Models.Estoque;
+import com.EstoqueTL.Data.Repositorys.EstoqueRepository;
 import com.EstoqueTL.Services.RequisicaoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,23 +17,27 @@ import com.EstoqueTL.Data.Repositorys.RequisicaoRepository;
 
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(value="/")
 public class RequisicaoController {
 
 	private final RequisicaoRepository requisicaoRepository;
+	private final EstoqueRepository estoqueRepository;
 	private final RequisicaoService requisicaoService;
 
-	RequisicaoController(RequisicaoRepository requisicaoRepository, RequisicaoService requisicaoService) {
+	RequisicaoController(RequisicaoRepository requisicaoRepository, EstoqueRepository estoqueRepository, RequisicaoService requisicaoService) {
         this.requisicaoRepository = requisicaoRepository;
+		this.estoqueRepository = estoqueRepository;
 		this.requisicaoService = requisicaoService;
     }
 
 	@GetMapping
 	public String RequisicaoGet(Model model) {
-		
-		Requisicao requisicao = new Requisicao();
-		model.addAttribute("requisicao", requisicao);
+
+		List<Estoque> estoqueList = (List<Estoque>) estoqueRepository.findAll();
+		model.addAttribute("estoqueList", estoqueList);
 		
 		return "root/requisicaoPage";
 	}
@@ -41,9 +47,7 @@ public class RequisicaoController {
 
 		Requisicao requisicao = new Requisicao();
 
-		if (bindingResult.hasErrors()) {	// FALTA IMPLEMENTAR PARA DADOS INVALIDOS, BUGADO
-			model.addAttribute("errors", bindingResult.getAllErrors());
-			model.addAttribute("requisicao", requisicao);
+		if (bindingResult.hasErrors()) {
 			return "root/requisicaoPage";
 			}
 
