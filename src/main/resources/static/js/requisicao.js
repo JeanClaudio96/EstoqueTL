@@ -38,18 +38,44 @@ function limparCampos() {
 }
 
 $(document).ready(function() {
-    // Delegação de eventos para lidar com entradas dinâmicas
-    $('#requisicaoForm').on('input', '#sigla', function() {
-        var termo = $(this).val().toUpperCase(); // Pega o texto digitado e converte para maiúsculas
-        var sugestoesFiltradas = siglaList.filter(function(estoque) {
-            return estoque.sigla.toUpperCase().includes(termo); // Filtra as sugestões com base no texto digitado
-        });
+    // Inicializa o Autocomplete no campo #sigla
+    $('#sigla').autocomplete({
+        source: estoqueList.map(function(estoque) {
+            return estoque.sigla;
+        }),
+        select: function(event, ui) {
+            var siglaSelecionada = ui.item.value;
+            var estoque = estoqueList.find(function(item) {
+                return item.sigla === siglaSelecionada;
+            });
 
-        // Atualiza as sugestões no campo de entrada usando o jQuery UI Autocomplete
-        $(this).autocomplete({
-            source: sugestoesFiltradas.map(function(estoque) {
-                return estoque.sigla;
-            })
-        });
+            if (estoque) {
+                // Preenche os campos
+                // ...
+
+                // Desabilita apenas os campos que devem ser desabilitados
+                $('#tipoMaterialSelect').prop('disabled', true);
+                $('#nome').prop('disabled', true);
+                $('#descricao').prop('disabled', true);
+                $('#unidadeDeMedidaSelect').prop('disabled', true);
+            } else {
+                // Limpa os campos
+                // ...
+
+                // Habilita apenas os campos que devem ser habilitados
+                $('#tipoMaterialSelect').prop('disabled', false);
+                $('#nome').prop('disabled', false);
+                $('#descricao').prop('disabled', false);
+                $('#unidadeDeMedidaSelect').prop('disabled', false);
+            }
+
+        }
+    });
+
+    // Ouvinte de eventos para o campo #sigla (evento de entrada)
+    $('#requisicaoForm').on('input', '#sigla', function() {
+        // Lógica de filtro de sugestões, se necessário
     });
 });
+
+
