@@ -5,15 +5,13 @@ import com.EstoqueTL.Data.Models.Estoque;
 import com.EstoqueTL.Data.Repositorys.EstoqueRepository;
 import com.EstoqueTL.Services.RequisicaoService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import com.EstoqueTL.Data.Models.Requisicao;
 import com.EstoqueTL.Data.Repositorys.RequisicaoRepository;
 
-import jakarta.validation.Valid;
+import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
@@ -27,30 +25,32 @@ public class RequisicaoController {
 	private final RequisicaoService requisicaoService;
 
 	RequisicaoController(RequisicaoRepository requisicaoRepository, EstoqueRepository estoqueRepository, RequisicaoService requisicaoService) {
-        this.requisicaoRepository = requisicaoRepository;
+		this.requisicaoRepository = requisicaoRepository;
 		this.estoqueRepository = estoqueRepository;
 		this.requisicaoService = requisicaoService;
-    }
+	}
 
 	@GetMapping
 	public ResponseEntity<List<Estoque>> RequisicaoGet(Model model) {
-
 		List<Estoque> estoqueList = (List<Estoque>) estoqueRepository.findAll();
 		return ResponseEntity.ok(estoqueList);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<?> RequisicaoPost(Model model, RequisicaoDTO requisicaoDTO, BindingResult bindingResult) {
+	public ResponseEntity<?> RequisicaoPost(Model model, RequisicaoDTO requisicaoDTO, BindingResult bindingResult, HttpServletResponse response) {
 
 		Requisicao requisicao = new Requisicao();
 
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body("Erro ao enviar o formulario");
-			}
+		}
 
 		requisicao = requisicaoService.convertDtoToEntity(requisicaoDTO);
 		requisicaoRepository.save(requisicao);
-		
+
+		// Adiciona um cabeçalho de resposta 'Location' indicando a URL de redirecionamento
+		response.setHeader("Location", "/minhasRequisicoes");
+
 		return ResponseEntity.ok("Requisicao enviada com sucesso");
 	}
 }
