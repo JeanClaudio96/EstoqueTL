@@ -29,7 +29,7 @@ public class RequisicaoController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> RequisicaoPost(RequisicaoDTO requisicaoDTO, BindingResult bindingResult) {
+	public ResponseEntity<?> RequisicaoPost(@RequestBody RequisicaoDTO requisicaoDTO, BindingResult bindingResult) {
 
 		Requisicao requisicao = new Requisicao();
 
