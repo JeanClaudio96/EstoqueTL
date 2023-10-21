@@ -21,23 +21,15 @@ import java.util.List;
 public class RequisicaoController {
 
 	private final RequisicaoRepository requisicaoRepository;
-	private final EstoqueRepository estoqueRepository;
 	private final RequisicaoService requisicaoService;
 
-	RequisicaoController(RequisicaoRepository requisicaoRepository, EstoqueRepository estoqueRepository, RequisicaoService requisicaoService) {
+	RequisicaoController(RequisicaoRepository requisicaoRepository, RequisicaoService requisicaoService) {
 		this.requisicaoRepository = requisicaoRepository;
-		this.estoqueRepository = estoqueRepository;
 		this.requisicaoService = requisicaoService;
 	}
 
-	@GetMapping
-	public ResponseEntity<List<Estoque>> RequisicaoGet(Model model) {
-		List<Estoque> estoqueList = (List<Estoque>) estoqueRepository.findAll();
-		return ResponseEntity.ok(estoqueList);
-	}
-
 	@PostMapping
-	public ResponseEntity<?> RequisicaoPost(Model model, RequisicaoDTO requisicaoDTO, BindingResult bindingResult, HttpServletResponse response) {
+	public ResponseEntity<?> RequisicaoPost(RequisicaoDTO requisicaoDTO, BindingResult bindingResult) {
 
 		Requisicao requisicao = new Requisicao();
 
@@ -47,9 +39,6 @@ public class RequisicaoController {
 
 		requisicao = requisicaoService.convertDtoToEntity(requisicaoDTO);
 		requisicaoRepository.save(requisicao);
-
-		// Adiciona um cabeçalho de resposta 'Location' indicando a URL de redirecionamento
-		response.setHeader("Location", "/minhasRequisicoes");
 
 		return ResponseEntity.ok("Requisicao enviada com sucesso");
 	}
