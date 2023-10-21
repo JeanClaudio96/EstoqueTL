@@ -37,6 +37,8 @@ public class RequisicaoController {
 			return ResponseEntity.badRequest().body("Erro ao enviar o formulario");
 		}
 
+		System.out.println(requisicaoDTO);
+
 		requisicao = requisicaoService.convertDtoToEntity(requisicaoDTO);
 		requisicaoRepository.save(requisicao);
 
