@@ -44,4 +44,6 @@ public class RequisicaoService {
         material.setQuantidadeDevolvida(materialDTO.getQuantidadeDevolvida());
         return material;
     }
+
+
 }

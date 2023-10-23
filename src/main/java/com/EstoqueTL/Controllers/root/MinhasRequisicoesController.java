@@ -26,4 +26,6 @@ public class MinhasRequisicoesController {
 		List<Requisicao> requisicaoList = (List<Requisicao>) requisicaoRepository.findAll();
 		return ResponseEntity.ok(requisicaoList);
 	}
+
+
 }
