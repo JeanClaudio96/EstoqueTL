@@ -15,6 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class RequisicaoDTO {
 
+    private Long id;
+
     private TipoReq tipoRequisicao;
 
     private String requisitante;

@@ -10,5 +10,4 @@ import java.util.List;
 
 public interface RequisicaoRepository extends CrudRepository<Requisicao, Long>{
     List<Requisicao> findAllByStatus(Status status);
-
 }
