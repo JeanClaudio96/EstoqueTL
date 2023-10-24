@@ -30,7 +30,7 @@ public class RequisicoesPendentesController {
         return ResponseEntity.ok(requisicaoList);
     }
 
-    @GetMapping(path = "/requisicao")
+    @GetMapping(path = "/requisicao/{id}")
     public ResponseEntity<?> RequisicaoGet(@RequestParam Long id){
         Optional<Requisicao> requisicaoOptional = requisicaoRepository.findById(id);
         if(requisicaoOptional.isPresent()){
@@ -42,7 +42,7 @@ public class RequisicoesPendentesController {
 
     }
 
-    @PostMapping(path = "/")
+    @PostMapping(path = "")
     public ResponseEntity<?> RequisicoesPendentesHandlePost(@RequestBody RequisicaoDTO requisicaoDTO){
         estoqueService.atualizarEstoque(requisicaoDTO);
         return ResponseEntity.ok().body("Requisicao foi tratada com sucesso!");
