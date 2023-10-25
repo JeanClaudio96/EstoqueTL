@@ -20,27 +20,20 @@ import java.util.List;
 @RequestMapping(value="/")
 public class RequisicaoController {
 
-	private final RequisicaoRepository requisicaoRepository;
 	private final RequisicaoService requisicaoService;
 
-	RequisicaoController(RequisicaoRepository requisicaoRepository, RequisicaoService requisicaoService) {
-		this.requisicaoRepository = requisicaoRepository;
+	RequisicaoController(RequisicaoService requisicaoService) {
 		this.requisicaoService = requisicaoService;
 	}
 
 	@PostMapping
 	public ResponseEntity<?> RequisicaoPost(@RequestBody RequisicaoDTO requisicaoDTO, BindingResult bindingResult) {
 
-		Requisicao requisicao = new Requisicao();
-
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body("Erro ao enviar o formulario");
 		}
 
-		System.out.println(requisicaoDTO);
-
-		requisicao = requisicaoService.convertDtoToEntity(requisicaoDTO);
-		requisicaoRepository.save(requisicao);
+		requisicaoService.saveRequisicao(requisicaoDTO);
 
 		return ResponseEntity.ok("Requisicao enviada com sucesso");
 	}

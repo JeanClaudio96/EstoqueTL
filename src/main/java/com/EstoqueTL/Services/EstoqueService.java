@@ -42,22 +42,23 @@ public class EstoqueService {
 
     public void atualizarEstoque (RequisicaoDTO requisicaoDTO){
         int count = 0;
+        int totalMateriais = requisicaoDTO.getMateriais().size();
 
         Optional<Requisicao> optionalRequisicao = requisicaoRepository.findById(requisicaoDTO.getId());
+
         if (optionalRequisicao.isPresent()){
             Requisicao requisicao = optionalRequisicao.get();
 
             List<Estoque> materialListAtt = new ArrayList<>();
 
             for(MaterialDTO materialDTO : requisicaoDTO.getMateriais()){
-                String siglaMaterial = materialDTO.getSigla();
-                Double quantidadeRequisitada = materialDTO.getQuantidadeRequisitada();
-                Estoque materialEmEstoque = estoqueRepository.findBySigla(siglaMaterial);
-                Double quantidadeExistente = materialEmEstoque.getQuantidade();
 
-                Double quantidadeAtualizada = quantidadeExistente-quantidadeRequisitada;
+                Estoque materialEmEstoque = estoqueRepository.findBySigla(materialDTO.getSigla());
+                double quantidadeExistente = materialEmEstoque.getQuantidade();
 
-                if(quantidadeAtualizada>0){
+                double quantidadeAtualizada = quantidadeExistente - materialDTO.getQuantidadeRequisitada();
+
+                if(quantidadeAtualizada>=0){
                     materialEmEstoque.setQuantidade(quantidadeAtualizada);
                     materialListAtt.add(materialEmEstoque);
                     count++;
@@ -69,7 +70,7 @@ public class EstoqueService {
 
             System.out.println("Numero de materiais com quantidade ok:" + count);
 
-            if(count == requisicaoDTO.getMateriais().size()){
+            if(count == totalMateriais){
                 for(Estoque material : materialListAtt){
                     estoqueRepository.save(material);
                 }
