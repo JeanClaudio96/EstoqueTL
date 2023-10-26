@@ -27,15 +27,15 @@ public class RequisicoesPendentesController {
     }
 
     @GetMapping(path = "")
-    public ResponseEntity<List<Requisicao>> RequisicoesPendentesGet(){
-        List<Requisicao> requisicaoList = requisicaoService.findAllRequisicoesByStatus(Status.PENDENTE);
+    public ResponseEntity<List<RequisicaoDTO>> RequisicoesPendentesGet(){
+        List<RequisicaoDTO> requisicaoList = requisicaoService.findAllRequisicoesByStatus(Status.PENDENTE);
         return ResponseEntity.ok(requisicaoList);
     }
 
     @GetMapping(path = "/requisicao/{id}")
     public ResponseEntity<?> RequisicaoGet(@PathVariable Long id){
 
-        Requisicao requisicao = requisicaoService.findRequisicaoById(id);
+        RequisicaoDTO requisicao = requisicaoService.findRequisicaoById(id);
 
         if(requisicao != null) {
             return ResponseEntity.ok(requisicao);
@@ -45,7 +45,7 @@ public class RequisicoesPendentesController {
     }
 
     @PutMapping(path = "/requisicao/{id}")
-    public ResponseEntity<?> RequisicoesPendentesHandlePost(@RequestBody RequisicaoDTO requisicaoDTO){
+    public ResponseEntity<?> RequisicoesPendentesHandlePost(@RequestBody @Valid RequisicaoDTO requisicaoDTO){
         estoqueService.atualizarEstoque(requisicaoDTO);
         return ResponseEntity.ok().body("Requisicao foi tratada com sucesso!");
     }

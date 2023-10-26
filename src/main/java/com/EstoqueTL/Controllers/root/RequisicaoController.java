@@ -4,6 +4,7 @@ import com.EstoqueTL.Data.DTO.RequisicaoDTO;
 import com.EstoqueTL.Data.Models.Estoque;
 import com.EstoqueTL.Data.Repositorys.EstoqueRepository;
 import com.EstoqueTL.Services.RequisicaoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,11 +28,7 @@ public class RequisicaoController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> RequisicaoPost(@RequestBody RequisicaoDTO requisicaoDTO, BindingResult bindingResult) {
-
-		if (bindingResult.hasErrors()) {
-			return ResponseEntity.badRequest().body("Erro ao enviar o formulario");
-		}
+	public ResponseEntity<?> RequisicaoPost(@RequestBody @Valid RequisicaoDTO requisicaoDTO) {
 
 		requisicaoService.saveRequisicao(requisicaoDTO);
 

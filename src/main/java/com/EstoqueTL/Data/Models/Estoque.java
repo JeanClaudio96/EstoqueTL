@@ -27,7 +27,6 @@ public class Estoque {
     @Column(name = "sigla")
     private String sigla;
 
-    @NotBlank
     @NotNull
     @Column(name = "tipo")
     @Enumerated(EnumType.STRING)
@@ -40,14 +39,12 @@ public class Estoque {
 
     @Column(name = "descricao")
     private String descricao;
-    
-    @NotBlank
+
     @NotNull
     @Column(name = "unidade_de_medida")
     @Enumerated(EnumType.STRING)
     private UnidadeDeMedida unidadeDeMedida;
 
-    @NotBlank
     @NotNull
     @Column(name = "quantidade")
     private Double quantidade;

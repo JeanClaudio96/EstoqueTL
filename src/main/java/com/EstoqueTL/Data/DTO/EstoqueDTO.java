@@ -18,18 +18,29 @@ import java.util.Date;
 @NoArgsConstructor
 public class EstoqueDTO {
 
+    private Long id;
+
+    @NotBlank
+    @NotNull
     private String sigla;
 
+    @NotNull
     private TipoMaterial tipoMaterial;
 
+    @NotBlank
+    @NotNull
     private String nome;
 
     private String descricao;
 
+    @NotNull
     private UnidadeDeMedida unidadeDeMedida;
 
+    @NotNull
     private Double quantidade;
 
+    @NotBlank
+    @NotNull
     private String adicionadoPor;
 
     private String atualizadoPor;

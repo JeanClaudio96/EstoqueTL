@@ -32,21 +32,7 @@ public class AdicionarMateriaisController {
 	
 	@PostMapping(value = "/adicionarMateriais")
 	public String AdicionarMateriaisPost(Model model, @Valid EstoqueDTO estoqueDTO, BindingResult bindingResult) {
-
-		Estoque estoque = new Estoque();
-
-		if (bindingResult.hasErrors()) {	// FALTA IMPLEMENTAR PARA DADOS INVALIDOS, BUGADO
-			model.addAttribute("errors", bindingResult.getAllErrors());
-			model.addAttribute("material", estoqueDTO);
-			return "admin/adicionarMateriaisPage";
-			}
-
-		estoque = estoqueService.convertDtoToEntity(estoqueDTO);
-		
-		System.out.println(estoque);
-		
-		estoqueRepository.save(estoque);
-		
+		estoqueService.saveMaterial(estoqueDTO);
 		return "redirect:admin/adminPage";
 	}
 }
