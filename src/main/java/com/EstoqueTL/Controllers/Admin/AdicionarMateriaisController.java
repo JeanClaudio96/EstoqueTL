@@ -3,6 +3,7 @@ package com.EstoqueTL.Controllers.Admin;
 import com.EstoqueTL.Data.DTO.EstoqueDTO;
 import com.EstoqueTL.Data.Repositorys.EstoqueRepository;
 import com.EstoqueTL.Services.EstoqueService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,21 +19,14 @@ import com.EstoqueTL.Data.Models.Estoque;
 public class AdicionarMateriaisController {
 	
 	final private EstoqueService estoqueService;
-	final private EstoqueRepository estoqueRepository;
 
-    AdicionarMateriaisController(EstoqueService estoqueService, EstoqueRepository estoqueRepository ) {
+    AdicionarMateriaisController(EstoqueService estoqueService) {
         this.estoqueService = estoqueService;
-		this.estoqueRepository = estoqueRepository;
     }
 	
-	@GetMapping(value = "/adicionarMateriais")
-	public String AdicionarMateriaisGet() {
-		return "admin/adicionarMateriaisPage";
-	}
-	
-	@PostMapping(value = "/adicionarMateriais")
-	public String AdicionarMateriaisPost(Model model, @Valid EstoqueDTO estoqueDTO, BindingResult bindingResult) {
+	@PostMapping(value = "/adicionarMaterial")
+	public ResponseEntity<String> AdicionarMateriaisPost(@Valid EstoqueDTO estoqueDTO) {
 		estoqueService.saveMaterial(estoqueDTO);
-		return "redirect:admin/adminPage";
+		return ResponseEntity.ok().build();
 	}
 }
