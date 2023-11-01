@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping(value="/")
+@RequestMapping(path = "/")
 public class RequisicaoController {
 
 	private final RequisicaoService requisicaoService;

@@ -7,15 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import com.EstoqueTL.Data.Models.Estoque;
 
-@Controller
-@RequestMapping(value="/admin")
+@RestController
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping(path = "/admin")
 public class AdicionarMateriaisController {
 	
 	final private EstoqueService estoqueService;
@@ -24,9 +23,9 @@ public class AdicionarMateriaisController {
         this.estoqueService = estoqueService;
     }
 	
-	@PostMapping(value = "/adicionarMaterial")
-	public ResponseEntity<String> AdicionarMateriaisPost(@Valid EstoqueDTO estoqueDTO) {
+	@PostMapping(path = "/adicionarMaterial")
+	public ResponseEntity<?> AdicionarMateriaisPost(@Valid @RequestBody EstoqueDTO estoqueDTO) {
 		estoqueService.saveMaterial(estoqueDTO);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok("Material adicionado ao banco de dados com sucesso!");
 	}
 }
