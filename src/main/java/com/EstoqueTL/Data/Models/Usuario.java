@@ -2,11 +2,13 @@ package com.EstoqueTL.Data.Models;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.management.relation.Role;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CollectionTable;
@@ -38,34 +40,23 @@ public class Usuario implements UserDetails{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	
-	@Column(name = "username", nullable = false)
+
 	private String username;
-	
-	@Column(name = "password", nullable = false)
+
 	private String password;
-	
-	@Column(name = "role", nullable = false)
-	private Role role;
-	
-	@Column(name = "created_at", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date CreatedAt;
-	
-	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
-	
-	@PrePersist
-	protected void onCreate(){
-		CreatedAt = (Date) new Date();
+
+	private UserRole role;
+
+	public Usuario (String username, String password, UserRole role) {
+		this.username = username;
+		this.password = password;
+		this.role = role;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+		else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
 	}
 
 	@Override
