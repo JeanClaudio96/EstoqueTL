@@ -1,4 +1,4 @@
-package com.EstoqueTL.Configuration;
+package com.EstoqueTL.Configuration.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -20,18 +21,24 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
+	private final SecurityFilter securityFilter;
+
+	public SecurityConfiguration(SecurityFilter securityFilter) {
+		this.securityFilter = securityFilter;
+	}
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.csrf(csrf -> csrf.disable())
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests((authorizeHttpRequests) ->
 				authorizeHttpRequests
 					.requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
 					.requestMatchers(HttpMethod.POST,"/auth/register").permitAll()
-					.requestMatchers("/**").hasRole("USER")
-					.anyRequest().authenticated()
-			);
+			)
+				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+		;
 		return http.build();
 	}
 

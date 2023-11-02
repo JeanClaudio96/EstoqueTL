@@ -16,9 +16,9 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Usuario findUsuario (String username) {
+    public UserDetails findUsuario (String username) {
         UserDetails usuarioEncontrado = usuarioRepository.findByUsername(username);
-        return (Usuario) usuarioEncontrado;
+        return usuarioEncontrado;
     }
 
     public void saveUsuario (RegisterDTO novoUsuario) {

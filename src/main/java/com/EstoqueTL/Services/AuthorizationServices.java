@@ -1,5 +1,6 @@
 package com.EstoqueTL.Services;
 
+import com.EstoqueTL.Data.Models.Usuario;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +17,6 @@ public class AuthorizationServices implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetails usuarioEncontrado = usuarioService.findUsuario(username);
-        return null;
+        return usuarioService.findUsuario(username);
     }
 }
